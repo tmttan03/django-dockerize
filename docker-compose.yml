@@ -1,52 +1,26 @@
-# version: "3.9"
-
-# services:
-#   db:
-#     image: mysql:8
-#     ports:
-#       - "3366:3306"
-#     environment:
-#       - MYSQL_DATABASE='ddjango'
-#       - MYSQL_USER='root'
-#       - MYSQL_PASSWORD='password'
-#       - MYSQL_ROOT_PASSWORD='password'
-#       - MYSQL_HOST='localhost'
-#     volumes:
-#       - /tmp/app/mysqld:/var/run/mysqld
-#       - ./db:/var/lib/mysql
-#   web:
-#     build: .
-#     command: python manage.py runserver 0.0.0.0:8000
-#     ports:
-#       - "8000:8000"
-#     volumes:
-#       - .:/app
-#       - /tmp/app/mysqld:/run/mysqld
-#     depends_on:
-#       - db
-
-
 version: "3.9"
 
 services:
   db:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
+    image: mysql:8
+    ports:
+      - "3366:3306"
     environment:
-      - POSTGRES_DB=postgresdg
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - MYSQL_DATABASE='ddjango'
+      - MYSQL_USER='root'
+      - MYSQL_PASSWORD='password'
+      - MYSQL_ROOT_PASSWORD='password'
+      - MYSQL_HOST=''
+    volumes:
+      - /tmp/app/mysqld:/var/run/mysqld
+      - ./db:/var/lib/mysql
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
     ports:
       - "8000:8000"
-    environment:
-      - POSTGRES_NAME=postgresdg
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+    volumes:
+      - .:/app
+      - /tmp/app/mysqld:/run/mysqld
     depends_on:
       - db
